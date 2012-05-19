@@ -1,0 +1,4 @@
+ROOT=/home/dingweijie/Desktop/kddcup2012/
+BIN=$ROOT/LDRSFramework
+CONF=$ROOT/conf
+DATA=
