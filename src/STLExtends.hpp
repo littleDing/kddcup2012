@@ -10,6 +10,7 @@ using std::ostream;
 using std::vector;
 using std::lower_bound;
 using std::cerr;
+using std::pair;
 
 inline ostream& LOG(){
     time_t t;
@@ -54,10 +55,24 @@ V findMax(const map<K,V>& m){
 	}
 	return ret;
 }
+template <class K,class V>
+V findMaxIndex(const map<K,V>& m){
+	K ret;  V value;
+	for(typename map<K,V>::const_iterator it=m.begin();it!=m.end();++it){
+        if(it->second > value){
+            value=it->second;
+            ret=it->first;
+        }
+	}
+	return ret;
+}
+
+
 template <class T>
 bool cmp(const T& a,const T& b){
-	return a>b;
+	return b<a;
 }
+
 template <class K,class V>
 vector<V> findMax(const map<K,V>& m,int cnt){
 	vector<V> ret;
@@ -65,6 +80,20 @@ vector<V> findMax(const map<K,V>& m,int cnt){
 		ret.push_back(it->second);
 	}
 	sort(ret.begin(),ret.end(),cmp);
+	return ret;
+}
+template <class K,class V>
+vector<K> findMaxIndex(const map<K,V>& m,int cnt){
+	vector<K> ret;
+    vector<pair<V,K> > tmp;
+	for(typename map<K,V>::const_iterator it=m.begin();it!=m.end();++it){
+		tmp.push_back(pair<V,K>(it->second,it->first));
+	}
+	sort(tmp.begin(),tmp.end());
+    int sz=tmp.size();
+    for(int i=0;i<cnt&&i<sz;i++){
+        ret.push_back(tmp[sz-1-i].second);
+    }
 	return ret;
 }
 

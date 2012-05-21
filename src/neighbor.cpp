@@ -64,7 +64,25 @@ public:
         }
     }
 	void output(const string& file="../data/track1/final/rec_log_test.txt.sorted"){
-		
+		LOG()<<__FUNCTION__<<" begins"<<endl;
+        int cnt=0;
+		ifstream fin;	fin.open(file.c_str());
+        int s,t,ok,last;
+        Vector tmp; 
+		while(fin>>s>>t>>ok>>t){
+			if(s!=last){
+                vector<int> rec=findMaxIndex(tmp,3);
+                printf("%d,",last);
+                for(int i=0;i<rec.size();i++){
+                    printf("%d ",rec[i]);
+                }
+                printf("\n");
+                tmp.clear();
+            }
+            tmp[t]=users[last].scores[t];
+            logRecordLoaded(cnt);
+        }
+		LOG()<<__FUNCTION__<<" ends"<<endl;
     }
     void loadIDs(const string& file="../data/track1/user_id.txt"){
 		LOG()<<__FUNCTION__<<" begins"<<endl;
