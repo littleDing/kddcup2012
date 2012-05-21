@@ -1,4 +1,7 @@
 ROOT=/home/dingweijie/Desktop/kddcup2012/
 BIN=$ROOT/LDRSFramework
 CONF=$ROOT/conf
-DATA=
+DATA=$ROOT/data/track1
+LOG=$ROOT/log/
+TMP=$ROOT/tmp
+TRAIN=$DATA/rec_log_train.txt

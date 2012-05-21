@@ -84,6 +84,8 @@ public:
 		}
 		LOG()<<__FUNCTION__<<" ends"<<endl;
 	}
+	void loadQueries(const char *file="../data/track1/final/user_action.txt"){
+	}
     void loadAll(){
         loadIDs();
         loadSNS();
@@ -92,9 +94,12 @@ public:
 }solver;
 
 
-int main(){
+int main(int argc,char **argv){
 	LOG()<<__FUNCTION__<<" begins"<<endl;
-    
+	    
+
+
+
     solver.loadAll();
     
 	LOG()<<__FUNCTION__<<" ends"<<endl;
