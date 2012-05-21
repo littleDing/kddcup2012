@@ -13,7 +13,10 @@ using std::cerr;
 inline ostream& LOG(){
     time_t t;
     time(&t);
-    return cerr<<asctime(localtime(&t));
+    char buff[1024];
+    strcpy(buff,asctime(localtime(&t)));
+    buff[strlen(buff)-1]=0;
+    return cerr<<"["<<buff<<"] ";
 }
 
 template <class T>
