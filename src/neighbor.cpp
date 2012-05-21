@@ -63,6 +63,9 @@ public:
             BFSOnce();
         }
     }
+	void output(const string& file="../data/track1/final/rec_log_test.txt.sorted"){
+		
+    }
     void loadIDs(const string& file="../data/track1/user_id.txt"){
 		LOG()<<__FUNCTION__<<" begins"<<endl;
         int cnt=0,id,n=2000000;
@@ -114,7 +117,7 @@ public:
     }
     void loadAll(const string basic="../data/track1/leaderboard/"){
         loadIDs();
-        loadSNS(basic+"/user_sns.txt");
+        loadSNS();
         loadRecomemdedUsers(basic+"/users.reced");
         //loadAction();
     }
@@ -125,7 +128,7 @@ int main(int argc,char **argv){
 	LOG()<<__FUNCTION__<<" begins"<<endl;
     const char opts[]="d:";
     char ch;
-    char dir[1024]; dir[0]=0;
+    char dir[1024]="../data/track1/final"; 
     while ((ch=getopt(argc,argv,"d:")) !=-1) {
         switch (ch) {
             case 'd':
@@ -136,7 +139,8 @@ int main(int argc,char **argv){
         }
     }
 
-    solver.loadAll();
+    solver.loadAll(dir);
+	solver.BFS();
     
 	LOG()<<__FUNCTION__<<" ends"<<endl;
 	return 0;

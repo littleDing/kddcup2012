@@ -7,10 +7,10 @@ source $include/../conf/config
 function cutSample(){
 
 data=$DATA/final/
-	cat $DATA/rec_log_test.txt | awk '$4> 1321891200{print}' > $data/rec_log_test.txt
+	cat $DATA/rec_log_test.txt | awk '$4 >= 1321891200{print}' > $data/rec_log_test.txt
 	cat $data/rec_log_test.txt | awk '{print $1}' | sort -n | uniq > $data/rec_log_test.userid		
 data=$DATA/leaderboard/
-	cat $DATA/rec_log_test.txt | awk '$4<=1321891200{print}' > $data/rec_log_test.txt
+	cat $DATA/rec_log_test.txt | awk '$4 <  1321891200{print}' > $data/rec_log_test.txt
 	cat $data/rec_log_test.txt | awk '{print $1}' | sort -n | uniq > $data/rec_log_test.userid	
 	leaderboard=`cat $data/rec_log_test.userid | wc -l`
 	cat $DATA/sub_min.csv | awk -v l=$leaderboard  'NR<=l{print}' > $data/sub_min.csv
@@ -20,7 +20,6 @@ data=$DATA/final/
 	awk 'BEGIN{i=1;j=1}ARGIND==1{id[i]=$1;i++}ARGIND==2{print id[j],$0;j++}' $data/rec_log_test.userid $data/sub_min.csv > $data/sub_min.order.csv
 
 }
-
 
 function statPopularity(){
 	cat $TRAIN \
@@ -61,17 +60,22 @@ data=$DATA/$1
 		now=-1;
 		cnt=0;
 		}{
-		if($1!=now){
-			if(now!=-1) printf("\n");
-				printf("%d ",$1);
+			if($1!=now){
 				cnt=0;
 				now=$1;
 			}		
 			if(cnt<3){
-				printf("%s ",$2)
+				print $0;
 			}
 			cnt++;	
-		}' > $data/sub.poplarity
+	}' | sort -n -k1,1 -k4,4 | awk 'BEGIN{now=-1}{
+		if(now!=$1){
+			if(now!=-1) printf("\n");
+			printf("%d",$1);
+			now=$1;
+		}
+		printf(" %d",$2);
+	}' > $data/sub.poplarity
 	awk 'ARGIND==1{
 		id=$1; $1="";
 		ans[id]=substr($0,2);
@@ -92,7 +96,7 @@ data=$DATA/$1
 }
 
 
-cutSample
+#cutSample
 culByPopularity leaderboard
 culByPopularity final
 echo "id,clicks" > $DATA/sub.me

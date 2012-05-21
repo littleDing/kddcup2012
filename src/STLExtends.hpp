@@ -4,6 +4,7 @@
 #include <map>
 #include <algorithm>
 #include <ctime>
+#include <cstring>
 using std::map;
 using std::ostream;
 using std::vector;
